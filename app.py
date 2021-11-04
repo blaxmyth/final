@@ -1,6 +1,6 @@
 # from flask import Flask, request, jsonify
 # from flask.logging import create_logger
-import logging
+# import logging
 import yfinance as yf
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse

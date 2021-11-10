@@ -54,12 +54,26 @@ jobs:
             image: ubuntu-2004:202010-01
         steps:
             - checkout
-            
+
             - run:
                 name: docker-build
                 command: |
                     docker build --tag=final-app .
                     docker image ls
+            - run:
+                name: docker-push
+                command: |
+                    dockerpath=blaxmyth/final
+
+                    # Step 2:  
+                    # Authenticate & tag
+                    echo "Docker ID and Image: $dockerpath"
+                    docker login -u blaxmyth
+                    docker tag final-app $dockerpath
+
+                    # Step 3:
+                    # Push image to a docker repository
+                    docker push $dockerpath
 
 workflows:
   default:

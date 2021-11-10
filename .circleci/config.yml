@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-    build:
+    lint-app-code:
         docker:
         # Use the same Docker base as the project
             - image: python:3.7.3-stretch
@@ -46,3 +46,8 @@ jobs:
             #     name: push docker image to online repo
             #     command: |
             #         make lint
+
+workflows:
+  default:
+    jobs:
+      - lint-app-code

@@ -16,3 +16,4 @@ yfinance==0.1.64
 uvicorn==0.15.0
 fastapi==0.70.0
 bs4==0.0.1
+pylint

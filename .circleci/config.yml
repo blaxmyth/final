@@ -68,7 +68,7 @@ jobs:
                     # Step 2:  
                     # Authenticate & tag
                     echo "Docker ID and Image: $dockerpath"
-                    docker login -u blaxmyth
+                    docker login -u blaxmyth -p K@!zen1911
                     docker tag final-app $dockerpath
 
                     # Step 3:

@@ -49,9 +49,9 @@ jobs:
 
 
     build-docker-image:
-        docker:
+        machine:
         # Use the same Docker base as the project
-            - image: python:3.7.3-stretch
+            image: ubuntu-2004:202010-01
         steps:
             - checkout
 

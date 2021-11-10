@@ -74,10 +74,38 @@ jobs:
                     # Step 3:
                     # Push image to a docker repository
                     docker push $dockerpath
+    
+    # deploy-docker-image:
+    #     machine:
+    #     # Use the same Docker base as the project
+    #         image: ubuntu-2004:202010-01
+    #     steps:
+    #         - checkout
 
+    #         - run:
+    #             name: docker-build
+    #             command: |
+    #                 docker build --tag=final-app .
+    #                 docker image ls
+    #         - run:
+    #             name: docker-push
+    #             command: |
+    #                 dockerpath=blaxmyth/final
+
+    #                 # Step 2:  
+    #                 # Authenticate & tag
+    #                 echo "Docker ID and Image: $dockerpath"
+    #                 docker login -u blaxmyth -p K@!zen1911
+    #                 docker tag final-app $dockerpath
+
+    #                 # Step 3:
+    #                 # Push image to a docker repository
+    #                 docker push $dockerpath
 workflows:
   default:
     jobs:
       - lint-app-code
       - build-docker-image:
             requires: [lint-app-code]
+    #   - deploy-docker-image:
+    #         requires: [build-docker-image]

@@ -75,8 +75,8 @@ jobs:
                     # Step 3:
                     # Push image to a docker repository
                     docker push $dockerpath
-                    docker tag final-app:latest public.ecr.aws/s2x7t7x9/final-app:latest
-                    docker push public.ecr.aws/s2x7t7x9/final-app:latest
+                    # docker tag final-app:latest public.ecr.aws/s2x7t7x9/final-app:latest
+                    # docker push public.ecr.aws/s2x7t7x9/final-app:latest
     
     deploy-kube-cluster:
         machine:
@@ -124,7 +124,7 @@ jobs:
                     kubectl get svc
                     kubectl get nodes
                     # kubectl create deployment final-app-deployment --image=blaxmyth/final:latest
-                    kubectl run final-app-deployment --image=public.ecr.aws/s2x7t7x9/final-app:latest --requests=cpu=500m --expose --port=80
+                    kubectl run final-app-deployment --image=blaxmyth/final:latest --requests=cpu=500m --expose --port=80
                     kubectl get deployments
                     kubectl get pods
                     # kubectl expose deployment final-app-deployment --type=LoadBalancer --name=YOUR_EXTERNAL_ENDPOINT_NAME

@@ -75,37 +75,38 @@ jobs:
                     # Push image to a docker repository
                     docker push $dockerpath
     
-    # deploy-docker-image:
-    #     machine:
-    #     # Use the same Docker base as the project
-    #         image: ubuntu-2004:202010-01
-    #     steps:
-    #         - checkout
+    deploy-docker-image:
+        machine:
+        # Use the same Docker base as the project
+            image: ubuntu-2004:202010-01
+        steps:
+            - checkout
 
-    #         - run:
-    #             name: docker-build
-    #             command: |
-    #                 docker build --tag=final-app .
-    #                 docker image ls
-    #         - run:
-    #             name: docker-push
-    #             command: |
-    #                 dockerpath=blaxmyth/final
+            - run:
+                name: pull docker image
+                command: |
+                    docker pull blaxmyth/final:latest
+                    docker images
 
-    #                 # Step 2:  
-    #                 # Authenticate & tag
-    #                 echo "Docker ID and Image: $dockerpath"
-    #                 docker login -u blaxmyth -p K@!zen1911
-    #                 docker tag final-app $dockerpath
+            - run:
+                name: install dependencies
+                command: |
+                    #Install eksctl for AWS EKS creation
+                    curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+                    sudo mv /tmp/eksctl /usr/local/bin
+                    eksctl version
 
-    #                 # Step 3:
-    #                 # Push image to a docker repository
-    #                 docker push $dockerpath
+                    #Install kubectl for kubenetes management
+                    curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl
+                    chmod +x ./kubectl
+                    sudo mv ./kubectl /usr/local/bin
+
 workflows:
   default:
     jobs:
       - lint-app-code
       - build-docker-image:
             requires: [lint-app-code]
-    #   - deploy-docker-image:
-    #         requires: [build-docker-image]
+      - deploy-docker-image:
+            requires: [build-docker-image]
+            

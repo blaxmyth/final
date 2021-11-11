@@ -130,6 +130,6 @@ workflows:
       - lint-app-code
       - build-docker-image:
             requires: [lint-app-code]
-      - deploy-docker-image:
+      - deploy-kube-cluster:
             requires: [build-docker-image]
             

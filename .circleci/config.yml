@@ -75,18 +75,18 @@ jobs:
                     # Push image to a docker repository
                     docker push $dockerpath
     
-    deploy-docker-image:
+    deploy-kube-cluster:
         machine:
         # Use the same Docker base as the project
             image: ubuntu-2004:202010-01
         steps:
             - checkout
 
-            - run:
-                name: pull docker image
-                command: |
-                    docker pull blaxmyth/final:latest
-                    docker images
+            # - run:
+            #     name: pull docker image
+            #     command: |
+            #         docker pull blaxmyth/final:latest
+            #         docker images
 
             - run:
                 name: install dependencies
@@ -103,7 +103,6 @@ jobs:
                     aws configure set region us-east-1
                     aws sts get-caller-identity
 
-
                     #Install eksctl for AWS EKS creation
                     curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
                     sudo mv /tmp/eksctl /usr/local/bin
@@ -115,9 +114,16 @@ jobs:
                     sudo mv ./kubectl /usr/local/bin
 
             - run:
-                name: deploy kubernetes kubernetes cluster
+                name: deploy kubernetes cluster
                 command: |
                     eksctl create cluster -f eksctl.yml
+                    kubectl version
+                    kubectl get svc
+                    kubectl get nodes
+                    kubectl create deployment final-app-deployment --image=blaxmyth/final:latest
+                    kubectl get deployments
+                    kubectl get pods
+                    # kubectl port-forward deployment/final-app-deployment 8080:80
 workflows:
   default:
     jobs:

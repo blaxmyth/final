@@ -7,6 +7,7 @@ WORKDIR /app
 COPY requirements.txt /app/
 
 RUN pip install -r requirements.txt
+#pip install --upgrade pip
 
 ## Step 2:
 # Copy source code to working directory

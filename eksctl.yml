@@ -2,7 +2,7 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: blaxmythbot-circleci
+  name: blaxmyth-circleci
   region: us-east-1
 
 nodeGroups:
